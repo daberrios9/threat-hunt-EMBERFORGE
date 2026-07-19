@@ -15,10 +15,9 @@
 
 ## 🔎 Flag Analysis & Findings
 
-### 🏁 Flag 1 – Fake Antivirus Dropper
-- **Answer:** `BitSentinelCore.exe`
-- **Discovery:** Located in `C:\ProgramData\`, the file was confirmed as the fake antivirus that launched the attack chain. At this point of the hunt, we just know that BitSentinelCore.exe was launched from explorer.exe, this means, the user manually clicked on it. I couldn't get any hits for the hash of this file in VirusTotal, so it must be a polymorphic malware (That changes a little bit every time it executes).
-
+### 🏁 Flag 1 – The Compromised Principal
+- **Answer:** `m.smith@lognpacific.org`
+- **Discovery:** Located in By reviewing Microsoft Defender XDR, I identified the affected account by opening 87241 through the Evidence and Response pane. The incident evidence listed the impacted user as a UPN rather than just a display name, which confirmed the account involved was m.smith@lognpacific.org. This UPN became the primary identity pivot for the rest of the investigation.
 ```kql
 DeviceProcessEvents
 | where DeviceName == "anthony-001"
