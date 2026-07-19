@@ -17,14 +17,7 @@
 
 ### 🏁 Flag 1 – The Compromised Principal
 - **Answer:** `m.smith@lognpacific.org`
-- **Discovery:** Located in By reviewing Microsoft Defender XDR, I identified the affected account by opening 87241 through the Evidence and Response pane. The incident evidence listed the impacted user as a UPN rather than just a display name, which confirmed the account involved was m.smith@lognpacific.org. This UPN became the primary identity pivot for the rest of the investigation.
-```kql
-DeviceProcessEvents
-| where DeviceName == "anthony-001"
-| where FileName == "BitSentinelCore.exe"
-| project Timestamp, FileName, ProcessCommandLine, FolderPath, InitiatingProcessFileName, AccountName
-| order by Timestamp asc
-```
+- **Discovery:** By reviewing Microsoft Defender XDR, I identified the affected account by opening 87241 through the Evidence and Response pane. The incident evidence listed the impacted user as a UPN rather than just a display name, which confirmed the account involved was m.smith@lognpacific.org. This UPN became the primary identity pivot for the rest of the investigation.
 
 ![image](https://github.com/user-attachments/assets/959b95b7-341a-46fe-9f00-cc1dc0e11393)
 
@@ -33,10 +26,9 @@ DeviceProcessEvents
 
 Now we want to identify the program or service responsible for dropping the malicious file into the disk. It didn't just spawn out of thin air.  This validates the delivery mechanism of the dropper and supports behavioral indicators of compromise, particularly in directories often used by malware.
 
-### 🏁 Flag 2 – How was it dropped?
-- **Answer:** `csc.exe`
-- **Discovery:** BitSentinelCore.exe was created via the C# compiler (`csc.exe`), a signed Microsoft binary abused by attackers. This was found by looking at the records of the timeline events around the date that this was suspected to happen. We can observe that csc.exe was who created BitSentinelCore.exe, and it did so with a very sketchy looking file path which was randomized on purpose to avoid detection and deceive the analyst in a mountain of logs:
-
+### 🏁 Flag 2 – The Flagged Source
+- **Answer:** `103.69.224.136 `
+- **Discovery:** I reviewed the incident timeline to identify the source of the suspicious sign-in. The event showed that the login originated from 103.69.224.136, which became the main indicator I used to correlate activity across the different log sources during the investigation.
 `"csc.exe" /noconfig /fullpaths @"C:\Users\4nth0ny!\AppData\Local\Temp\c5gy0jzg\c5gy0jzg.cmdline"'`
 
 ![image](https://github.com/user-attachments/assets/49de3cba-67fe-4d3a-ab15-1e5a5bd1b9f0)
@@ -44,15 +36,14 @@ Now we want to identify the program or service responsible for dropping the mali
 
 ---
 
-### 🏁 Flag 3 – Initial Execution Verification
-- **Answer:** `BitSentinelCore.exe`
-- **Notes:** We want to verify whether the dropped malicious file was manually executed by the user or attacker. Execution of the file marks the start of the malicious payloads being triggered, indicating user interaction or attacker initiation. Execution appeared manual via `explorer.exe`, indicating user interaction. Refer to screenshot on flag 1 for query and results.
-- **Key Timestamp:** `2025-05-07T02:00:36.794406Z`
+### 🏁 Flag 3 – The Client OS
+- **Answer:** `Linux`
+- **Discovery:** I examined the user-agent string associated with the flagged sign-in in the incident timeline to determine the operating system used during the login. The user-agent identified the client operating system as Linux, providing additional context about the environment the attacker used to access the account.
 
 ---
 
-### 🏁 Flag 4 – Keylogger File Dropped
-- **Answer:** `systemreport.lnk`
+### 🏁 Flag 4 – The Stored Detection Type
+- **Answer:** `anonymizedIPAddress`
 - **Notes:** We now need to identify whether any artifact was dropped that indicates keylogger behavior. Created shortly after BitSentinelCore execution, placed in the AppData Startup folder. This confirms credential harvesting or surveillance behavior linked to the fake antivirus binary.
 
 - **Query Used:**
@@ -70,8 +61,8 @@ Note: An LNK file is a Windows shortcut, which points to and is used to open ano
 
 ---
 
-### 🏁 Flag 5 – Registry Persistence
-- **Answer:** `HKEY_CURRENT_USER\S-1-5-21-2009930472-1356288797-1940124928-500\SOFTWARE\Microsoft\Windows\CurrentVersion\Run`
+### 🏁 Flag 5 – The Audit Verdict 
+- **Answer:** `dismissed`
 - **Key Detail:** We need to determine if the malware established persistence via the Windows Registry. This reveals how the malware achieves persistence across system reboots or logins, helping track long-term infection. The above key was created by BitSentinelCore to auto-run malware at logon.
 
 This is a step that was especially painfully slow. I didn't know why I could not find registry information even thought I have used it before, just to realize that if you look at the DeviceRegistryEvents in Microsoft Sentinel, it doesn't exist. This table only exists in the Microsoft Defender for Endpoint portal, somehow. Way to go, Microsoft. 
@@ -91,8 +82,8 @@ The fact that there was more than a thousand entries on registry changes also ad
 
 ---
 
-### 🏁 Flag 6 – Scheduled Task Created
-- **Answer:** `UpdateHealthTelemetry`
+### 🏁 Flag 6 – Live Exposure
+- **Answer:** `Enabled`
 - **Notes:** Going through the logs, I could see that there was Windows Task Scheduler Activity, so we want to verify that this was indeed malicious. Without detecting this task,you might miss that the system stays infected beyond just running the dropper once. This task was scheduled to run daily, providing long-term persistence. The name mimics legitimate telemetry functions to evade detection.
 
 ```kql
@@ -110,14 +101,155 @@ This query was useful to find anything that had to do with scheduled tasks. I di
 
 ---
 
-### 🏁 Flag 7 – Process Spawn Chain
-- **Answer:** `BitSentinelCore.exe -> cmd.exe -> schtasks.exe`
+### 🏁 Flag 7 – How the Session Beat MFA
+- **Answer:** `singleFactorAuthentication`
 - **Notes:** Clear lateral process relationship confirming scheduled task was malware-controlled.
 
 ---
 
-### 🏁 Flag 8 – Root Cause Timestamp
-- **Answer:** `2025-05-07T02:00:36.794406Z`
+### 🏁 Flag 8 – The Control Surface That Let Them In
+- **Answer:** `One Outlook Web`
 - **Notes:** This timestamp was confirmed to align with malware execution, file drop, and registry modification—all tracing back to BitSentinelCore.exe.
 
 ---
+### 🏁 Flag 9 - 
+- **Answer:**
+---
+
+### 🏁 Flag 10 - 
+- **Answer:**
+  
+---
+
+### 🏁 Flag 11 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 12 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 13 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 14 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 15 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 16 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 17 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 18 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 19 - 
+- **Answer:**
+
+--- 
+
+### 🏁 Flag 20 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 21 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 22 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 23 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 24 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 25 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 26 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 27 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 28 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 29 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 30 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 31 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 32 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 33 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 34 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 35 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 36 - 
+- **Answer:**
+
+---
+
+### 🏁 Flag 37 - 
+- **Answer:**
