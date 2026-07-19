@@ -112,144 +112,144 @@ This query was useful to find anything that had to do with scheduled tasks. I di
 - **Notes:** This timestamp was confirmed to align with malware execution, file drop, and registry modification—all tracing back to BitSentinelCore.exe.
 
 ---
-### 🏁 Flag 9 - 
-- **Answer:**
+### 🏁 Flag 9 - Failed Attempts Before Entry
+- **Answer:** `2`
 ---
 
-### 🏁 Flag 10 - 
-- **Answer:**
+### 🏁 Flag 10 - Blast Radius of One Token
+- **Answer:** `7`
   
 ---
 
-### 🏁 Flag 11 - 
-- **Answer:**
+### 🏁 Flag 11 - One Caustious Session
+- **Answer:** `005d431a-380b-1f5e-e554-16d5010dc28e`
 
 ---
 
-### 🏁 Flag 12 - 
-- **Answer:**
+### 🏁 Flag 12 - MFA Posture Profiling
+- **Answer:** `userRegistrationDetails`
 
 ---
 
-### 🏁 Flag 13 - 
-- **Answer:**
+### 🏁 Flag 13 - Group Enumeration
+- **Answer:** `/me/memberOf`
 
 ---
 
-### 🏁 Flag 14 - 
-- **Answer:**
+### 🏁 Flag 14 - The Fraudulent Request 
+- **Answer:** `Updated Banking Details - Pacific IT Monthly`
 
 ---
 
-### 🏁 Flag 15 - 
-- **Answer:**
+### 🏁 Flag 15 - The Threa They Mined
+- **Answer:** ``
 
 ---
 
-### 🏁 Flag 16 - 
-- **Answer:**
+### 🏁 Flag 16 - The Fraud Target 
+- **Answer:** `j.reynolds@lognpacific.org`
 
 ---
 
-### 🏁 Flag 17 - 
-- **Answer:**
+### 🏁 Flag 17 - Second Channel Reinforcement 
+- **Answer:** `Microsoft Teams`
 
 ---
 
-### 🏁 Flag 18 - 
-- **Answer:**
+### 🏁 Flag 18 - The Concealment Rule 
+- **Answer:** `Invoice Processing`
 
 ---
 
-### 🏁 Flag 19 - 
-- **Answer:**
+### 🏁 Flag 19 - Where the Hidden Male Goes 
+- **Answer:** `hide mail without raising suspicion`
 
 --- 
 
-### 🏁 Flag 20 - 
-- **Answer:**
+### 🏁 Flag 20 - The Exfiltration Rule 
+- **Answer:** `merovingian1337@proton.me`
 
 ---
 
-### 🏁 Flag 21 - 
-- **Answer:**
+### 🏁 Flag 21 - Who Both Rules Target 
+- **Answer:** `hide replies to the fraudulent payment request`
 
 ---
 
-### 🏁 Flag 22 - 
-- **Answer:**
+### 🏁 Flag 22 - The Exfil Operation
+- **Answer:** `FileDownloaded`
 
 ---
 
-### 🏁 Flag 23 - 
-- **Answer:**
+### 🏁 Flag 23 - Volume Taken 
+- **Answer:** `3`
 
 ---
 
-### 🏁 Flag 24 - 
-- **Answer:**
+### 🏁 Flag 24 - The Credential Document 
+- **Answer:** `VPN-Access-Credentials.txt`
 
 ---
 
-### 🏁 Flag 25 - 
-- **Answer:**
+### 🏁 Flag 25 - The Vault Pointer 
+- **Answer:** `yomark.pdf`
 
 ---
 
-### 🏁 Flag 26 - 
-- **Answer:**
+### 🏁 Flag 26 - Disprove the Innocent Explanation
+- **Answer:** `0`
 
 ---
 
-### 🏁 Flag 27 - 
-- **Answer:**
+### 🏁 Flag 27 - Catch the Plant 
+- **Answer:** `Microsoft Flow Portal`
 
 ---
 
-### 🏁 Flag 28 - 
-- **Answer:**
+### 🏁 Flag 28 - The Cause Behind the Forward 
+- **Answer:** `MicrosoftGraphActivityLogs`
 
 ---
 
-### 🏁 Flag 29 - 
-- **Answer:**
+### 🏁 Flag 29 - Prove It With Sequence
+- **Answer:** `The Graph call`
 
 ---
 
-### 🏁 Flag 30 - 
-- **Answer:**
+### 🏁 Flag 30 - The Automation Source IP
+- **Answer:** `20.150.129.194`
 
 ---
 
-### 🏁 Flag 31 - 
-- **Answer:**
+### 🏁 Flag 31 - The Automation Source Identity
+- **Answer:** `7ab7862c-4c57-491e-8a45-d52a7e023983`
 
 ---
 
-### 🏁 Flag 32 - 
-- **Answer:**
+### 🏁 Flag 32 - Name the Abused Service
+- **Answer:** `Power Automate`
 
 ---
 
-### 🏁 Flag 33 - 
-- **Answer:**
+### 🏁 Flag 33 - One Actor, Every Source
+- **Answer:** `7`
 
 ---
 
-### 🏁 Flag 34 - 
-- **Answer:**
+### 🏁 Flag 34 - Containment Ordering 
+- **Answer:** `Revoke user sessions`
 
 ---
 
-### 🏁 Flag 35 - 
-- **Answer:**
+### 🏁 Flag 35 - Where the Flow Is Removed
+- **Answer:** `Power Platform admin center`
 
 ---
 
-### 🏁 Flag 36 - 
-- **Answer:**
+### 🏁 Flag 36 - The Control That Never Fired
+- **Answer:** `Conditional Access was not applied, allowing the legacy single-factor client path to bypass policy.`
 
 ---
 
-### 🏁 Flag 37 - 
-- **Answer:**
+### 🏁 Flag 37 - Why Revoke Before Reset 
+- **Answer:** `Refresh tokens survive a password reset; revoke user sessions first.`
